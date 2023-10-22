@@ -13,7 +13,9 @@
 Задать два стека, поменять информацию местами.
 <img width="1080" alt="image" src="https://github.com/XaiCheremushka/OOP_laba1_2023/assets/124810594/c7baf99d-f334-4041-a95e-a6c2ae1c9c88">
 # Лабораторная 4:
-
+Промоделировать вращение спутника вокруг планеты по эллиптической орбите. Когда скрывается за планетой – спутник не виден.
+<img width="289" alt="image" src="https://github.com/XaiCheremushka/OOP_laba1_2023/assets/124810594/492f67fb-adc3-43fd-8382-1d4d0e60780d">
+<img width="289" alt="image" src="https://github.com/XaiCheremushka/OOP_laba1_2023/assets/124810594/839b6349-04f4-4d2b-ae4b-1c17cea6314a">
 # Лабораторная 5:
 Клиент при обращении к серверу получает случайно выбранный сонет Шекспира из файла.
 <img width="1080" alt="image" src="https://github.com/XaiCheremushka/OOP_laba1_2023/assets/124810594/6fa905ec-a5db-41e5-86fe-b5be31f2161b">
