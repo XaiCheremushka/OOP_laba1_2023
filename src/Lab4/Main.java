@@ -4,71 +4,70 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.GeneralPath;
 
-public class Main {
+public class Main extends JPanel implements ActionListener {
+    private int planetRadius = 100;  // Радиус планеты
+    private int satelliteRadius = 10; // Радиус спутника
+    private int satelliteX, satelliteY;
+    private double angle = 0; // Угол для анимации вращения
+    private Timer timer;
+
+    private boolean isSatelliteVisible = true;
+
+    public Main() {
+        timer = new Timer(10, this);
+        timer.start();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Увеличиваем угол для анимации вращения
+        angle += 0.02;
+
+        // Рассчитываем координаты спутника на эллиптической орбите
+        int centerX = getWidth() / 2;
+        int centerY = getHeight() / 2;
+        int a = 150; // Большая полуось эллипса
+        int b = 80; // Малая полуось эллипса
+        satelliteX = centerX + (int) (a * Math.cos(angle));
+        satelliteY = centerY + (int) (b * Math.sin(angle));
+
+        isSatelliteVisible = isSatelliteVisible(centerX, centerY);
+        repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        int centerX = getWidth() / 2;
+        int centerY = getHeight() / 2;
+
+        // Рисуем планету
+        g.setColor(Color.BLUE);
+        g.fillOval(centerX - planetRadius, centerY - planetRadius, 2 * planetRadius, 2 * planetRadius);
+
+        // Рисуем спутник только, если он видим
+        if (isSatelliteVisible) {
+            g.setColor(Color.GRAY);
+            g.fillOval(satelliteX - satelliteRadius, satelliteY - satelliteRadius, 2 * satelliteRadius, 2 * satelliteRadius);
+        }
+    }
+
+    private boolean isSatelliteVisible(int centerX, int centerY) {
+        if (satelliteY < centerY) {
+            double distance = Math.sqrt(Math.pow(centerX - satelliteX, 2) + Math.pow(centerY - satelliteY, 2));
+            return distance > planetRadius + satelliteRadius;
+        }
+        else
+            return true;
+    }
+
     public static void main(String[] args) {
-        JFrame fr=new JFrame("Вращение треугольника вокруг своего центра тяжести");
-        fr.setPreferredSize( new Dimension(300,300));
-        final JPanel pan= new JPanel();
-        fr.add(pan);
-        fr.setVisible(true);
-        fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fr.pack();
-        Timer tm= new Timer(500, new ActionListener(){
-            int i=0;
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                Graphics2D gr=(Graphics2D)pan.getRootPane().getGraphics();
-                pan.update(gr);
-                GeneralPath path=new GeneralPath();
-                path.append(new Polygon(new int []{60,-80,50},new int[]{-60,-50,40},3),true);
-                int x=(60-80+50)/3,y=(-60-50+40)/3;
-                gr.translate(150, 150);
-                AffineTransform tranforms = AffineTransform.getRotateInstance((i++)*0.07, x, y);
-                gr.transform(tranforms);
-                gr.draw(path);
-            }});
-        tm.start();
+        JFrame frame = new JFrame("Лабораторная работа 4");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 400);
+        frame.add(new Main());
+        frame.setVisible(true);
     }
 }
-
-//import javax. swing.*;
-//public final class HelloWorld implements Runnable {
-//    public static void main(String[] args) {
-////Swing имеет собственный управляющий поток (т.н. dispatching thread),
-////который работает параллельно с основным (в котором выполняется main())
-////потоком. Если основной поток закончит работу (метод main завершится),
-////поток отвечающий за работу Swing-интерфейса может продолжать свою работу.
-////И даже если пользователь закрыл все окна, программа продолжит свою работу
-////(до тех пор, пока жив данный поток). Начиная с Java 6, когда все
-////компоненты уничтожены, управляющий поток останавливается автоматически.
-////Запускаем весь код, работающий в управляющем потоке, даже инициализацию:
-//        SwingUtilities.invokeLater (new HelloWorld());
-//    }
-//    public void run() {
-//// Создаем окно с заголовком "Hello, World!"
-//        Frame f = new JFrame ("Hello, World!");
-//// Ранее практиковалось следующее: создавался listener и регистрировался
-//// на экземпляре главного окна, который реагировал на windowClosing()
-//// принудительной остановкой виртуальной машины вызовом System.exit()
-//// Теперь же есть более "правильный" способ задав реакцию на закрытие окна.
-//// Данный способ уничтожает текущее окно, но не останавливает приложение. Тем
-//// самым приложение будет работать пока не будут закрыты все окна.
-//        f.setDefaultCloseOperation (JFrame. DISPOSE_ON_CLOSE );
-//// однако можно задать и так:
-//// f.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-//// Добавляем на панель окна нередактируемый компонент с текстом.
-//// f.getContentPane().add (new JLabel("Hello, World!")); - старый стиль
-//        f.add(new JLabel("Hello World"));
-//// pack() "упаковывает" окно до оптимального размера
-//// всех расположенных в нем компонентов.
-//        f.pack();
-//// Показать окно
-//        f.setVisible(true);
-//    }
-//}
-
-
-
