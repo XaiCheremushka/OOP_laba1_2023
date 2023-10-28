@@ -6,10 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Main extends JPanel implements ActionListener {
-    private int planetRadius = 100;  // Радиус планеты
-    private int satelliteRadius = 10; // Радиус спутника
+    private int planetRadius = 100;  
+    private int satelliteRadius = 10; 
     private int satelliteX, satelliteY;
-    private double angle = 0; // Угол для анимации вращения
+    private double angle = 0; 
     private Timer timer;
 
     private boolean isSatelliteVisible = true;
@@ -20,15 +20,13 @@ public class Main extends JPanel implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        // Увеличиваем угол для анимации вращения
+    public void actionPerformed(ActionEvent e) {        
         angle += 0.02;
 
-        // Рассчитываем координаты спутника на эллиптической орбите
         int centerX = getWidth() / 2;
         int centerY = getHeight() / 2;
-        int a = 150; // Большая полуось эллипса
-        int b = 80; // Малая полуось эллипса
+        int a = 150; 
+        int b = 80; 
         satelliteX = centerX + (int) (a * Math.cos(angle));
         satelliteY = centerY + (int) (b * Math.sin(angle));
 
@@ -43,11 +41,9 @@ public class Main extends JPanel implements ActionListener {
         int centerX = getWidth() / 2;
         int centerY = getHeight() / 2;
 
-        // Рисуем планету
         g.setColor(Color.BLUE);
         g.fillOval(centerX - planetRadius, centerY - planetRadius, 2 * planetRadius, 2 * planetRadius);
 
-        // Рисуем спутник только, если он видим
         if (isSatelliteVisible) {
             g.setColor(Color.GRAY);
             g.fillOval(satelliteX - satelliteRadius, satelliteY - satelliteRadius, 2 * satelliteRadius, 2 * satelliteRadius);
