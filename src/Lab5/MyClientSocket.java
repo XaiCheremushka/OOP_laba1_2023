@@ -1,5 +1,4 @@
 package Lab5;
-/* получение клиентом строки : MyClientSocket. java */
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +11,7 @@ public class MyClientSocket {
         Socket socket = null;
         InetAddress myIP = null;
 
-        try {// получение строки клиентом
+        try {
             myIP = InetAddress.getLocalHost();
             socket = new Socket( myIP, 8030);
             BufferedReader dis = new BufferedReader(new InputStreamReader(
